@@ -1,4 +1,3 @@
-"set colorcolumn=120
 colorscheme ron
 filetype indent plugin on
 set backspace=indent,eol,start
@@ -9,3 +8,4 @@ set ruler
 set shiftwidth=4
 set tabstop=4
 syntax on
+"set colorcolumn=120

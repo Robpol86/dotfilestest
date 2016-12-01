@@ -13,6 +13,7 @@ HISTSIZE=100000
 HISTTIMEFORMAT='+%F %T '
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}"'echo $$ "$(history 1)" >> ~/.bash_eternal_history'
 shopt -s histappend  # Append to the history file, don't overwrite it.
+touch ~/.bash_eternal_history && chmod 0600 $_
 
 # Colors and terminal.
 GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

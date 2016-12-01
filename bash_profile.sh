@@ -15,6 +15,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}"'echo $$ "$(history 1)" >> ~
 shopt -s histappend  # Append to the history file, don't overwrite it.
 
 # Colors and terminal.
+GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 if [[ $OSTYPE == darwin* ]]; then
     CLICOLOR=1
     LC_CTYPE=en_US.UTF-8
@@ -43,18 +44,20 @@ fi
 GOPATH=$HOME/gocode
 PATH="$PATH:$GOPATH/bin"
 
-# Python 3.4.
-if [ -d "/Library/Frameworks/Python.framework/Versions/3.4/bin" ]; then
-    PATH="${PATH}:/Library/Frameworks/Python.framework/Versions/3.4/bin"
-fi
+# Python.
+test -d /Library/Frameworks/Python.framework/Versions/3.4/bin && PATH="$PATH:$_"
+test -d /Library/Frameworks/Python.framework/Versions/3.5/bin && PATH="$PATH:$_"
 
 # Bash completion.
 for path in \
     "/usr/local/etc/bash_completion"\
-    "/usr/share/git-core/contrib/completion/git-prompt.sh"\
-; do [ -f ${path} ] && source ${path}; done
+    "/usr/share/bash-completion/bash_completion"\
+    "/etc/bash_completion"\
+; do test -f "$path" && source $_ && break; done
+unset path
 
 # Git prompt.
+test -f /usr/share/git-core/contrib/completion/git-prompt.sh && source $_
 if type __git_ps1 &> /dev/null; then
     if [[ $OSTYPE == darwin* ]]; then  # OS X.
         PS1='[\h \[\e[0;36m\]\W\[\e[0m\]$(__git_ps1 " \[\e[1;32m\](%s)\[\e[0m\]")]\$ '

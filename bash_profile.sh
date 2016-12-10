@@ -42,7 +42,7 @@ c=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.
 fi
 
 # Golang.
-GOPATH=$HOME/gocode
+export GOPATH=$HOME/gocode
 PATH="$PATH:$GOPATH/bin"
 
 # Python.

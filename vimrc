@@ -7,5 +7,7 @@ set laststatus=2
 set ruler
 set shiftwidth=4
 set tabstop=4
+set mouse=
+set ttymouse=
 syntax on
 "set colorcolumn=120

@@ -23,10 +23,9 @@ function _robpol86_run_once {
     git config --global rerere.enabled true
     git config --global user.email robpol86@gmail.com
     git config --global user.name Robpol86
-    for path in $(find /usr -type f -name diff-highlight 2>/dev/null)
-    do if [ -f ${path} ]; then
+    for path in $(find /usr -type f -name diff-highlight* 2>/dev/null); do
         git config --global pager.diff "perl $path |less"
         git config --global pager.show "perl $path |less"
         git config --global pager.log "perl $path |less"
-    fi; done
+    done
 }

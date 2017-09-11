@@ -68,3 +68,9 @@ if type __git_ps1 &> /dev/null; then
         PS1='\[\e[1;32m\]\u@\h\[\e[00m\]:\[\e[1;34m\]\W$(__git_ps1 " (\[\e[4m\]%s\[\e[24m\])") \$\[\e[0m\] '
     fi
 fi
+
+# SSH agent on Linux.
+if [[ $OSTYPE != darwin* ]]; then
+    [ -n "$SSH_AUTH_SOCK" ] || eval $(/usr/bin/ssh-agent)
+    trap 'test -n "$SSH_AUTH_SOCK" && eval $(/usr/bin/ssh-agent -k)' 0
+fi

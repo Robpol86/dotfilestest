@@ -24,6 +24,7 @@ function _robpol86_run_once {
     git config --global rerere.enabled true
     git config --global user.email robpol86@gmail.com
     git config --global user.name Robpol86
+    echo $'.DS_Store\n.idea/' > ~/.gitignore
     # Build diff-highlight.
     file_path=$(find /usr -type f -name diff-highlight 2>/dev/null |head -1)
     if [ -z "$file_path" ]; then

@@ -49,6 +49,9 @@ PATH="$PATH:$GOPATH/bin"
 test -d /Library/Frameworks/Python.framework/Versions/3.4/bin && PATH="$PATH:$_"
 test -d /Library/Frameworks/Python.framework/Versions/3.5/bin && PATH="$PATH:$_"
 
+# Misc PATH.
+PATH="$PATH:$HOME/bin"
+
 # Bash completion.
 for path in \
     "/usr/local/etc/bash_completion"\

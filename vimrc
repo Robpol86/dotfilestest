@@ -1,5 +1,6 @@
 colorscheme ron
 filetype indent plugin on
+au FileType gitcommit set t_BE=
 set backspace=indent,eol,start
 set expandtab
 set hlsearch

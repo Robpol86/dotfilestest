@@ -1,10 +1,12 @@
+#!/bin/bash
+
 # Environment and startup programs.
 # https://github.com/Robpol86/dotfiles
 
 # If not running interactively, don't do anything.
 case $- in
     *i*) ;;
-      *) return;;
+      *) return ;;
 esac
 
 # History.
@@ -13,7 +15,7 @@ HISTSIZE=100000
 HISTTIMEFORMAT='+%F %T '
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND;}"'echo $$ "$(history 1)" >> ~/.bash_eternal_history'
 shopt -s histappend  # Append to the history file, don't overwrite it.
-touch ~/.bash_eternal_history && chmod 0600 $_
+install -m 0600 /dev/null ~/.bash_eternal_history
 
 # Colors and terminal.
 GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -21,7 +23,6 @@ if [[ $OSTYPE == darwin* ]]; then
     CLICOLOR=1
     LC_CTYPE=en_US.UTF-8
     LSCOLORS=gxGxFxdxbxDxDxBxBxExEx
-    PS1='[\h \[\e[0;36m\]\W\[\e[0m\]]\$ '
 else
     LS_COLORS="rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;\
 232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;\
@@ -38,7 +39,6 @@ c=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.
 :*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=\
 38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45\
 :*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:"
-    PS1='\[\e[1;32m\]\u@\h\[\e[00m\]:\[\e[1;34m\]\W \$\[\e[0m\] '
 fi
 
 # Golang.
@@ -53,21 +53,27 @@ test -d /Library/Frameworks/Python.framework/Versions/3.5/bin && PATH="$PATH:$_"
 PATH="$PATH:$HOME/bin"
 
 # Bash completion.
-for path in \
-    "/usr/local/etc/bash_completion"\
-    "/usr/share/bash-completion/bash_completion"\
-    "/etc/bash_completion"\
-; do test -f "$path" && source $_ && break; done
+for path in /usr/local/etc/bash_completion /usr/share/bash-completion/bash_completion /etc/bash_completion; do
+    # shellcheck disable=SC1090
+    source "$path" 2> /dev/null && break
+done
 unset path
+# shellcheck disable=SC1091
+source /usr/share/git-core/contrib/completion/git-prompt.sh 2> /dev/null
 
-# Git prompt.
-test -f /usr/share/git-core/contrib/completion/git-prompt.sh && source $_
+# Prompt.
+PS1=
 if type __git_ps1 &> /dev/null; then
-    if [[ $OSTYPE == darwin* ]]; then  # OS X.
-        PS1='[\h \[\e[0;36m\]\W\[\e[0m\]$(__git_ps1 " \[\e[1;32m\](%s)\[\e[0m\]")]\$ '
-    elif [ $EUID == 0 ]; then  # Linux root.
-        PS1='\[\e[1;31m\]\h\[\e[00m\]:\[\e[1;34m\]\W$(__git_ps1 " (\[\e[4m\]%s\[\e[24m\])") \$\[\e[0m\] '
-    else  # Linux non-root.
-        PS1='\[\e[1;32m\]\u@\h\[\e[00m\]:\[\e[1;34m\]\W$(__git_ps1 " (\[\e[4m\]%s\[\e[24m\])") \$\[\e[0m\] '
+    if [[ $OSTYPE == darwin* ]]; then
+        PS1='$(__git_ps1 " \[\e[1;32m\](%s)\[\e[0m\]")'
+    else
+        PS1='$(__git_ps1 " (\[\e[4m\]%s\[\e[24m\])")'
     fi
+fi
+if [[ $OSTYPE == darwin* ]]; then
+    PS1='[\h \[\e[0;36m\]\W\[\e[0m\]'"$PS1"']\$ '
+elif [ $EUID == 0 ]; then  # Linux root.
+    PS1='\[\e[1;31m\]\h\[\e[00m\]:\[\e[1;34m\]\W'"$PS1"' \$\[\e[0m\] '
+else  # Linux non-root.
+    PS1='\[\e[1;32m\]\u@\h\[\e[00m\]:\[\e[1;34m\]\W'"$PS1"' \$\[\e[0m\] '
 fi

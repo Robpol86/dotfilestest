@@ -15,6 +15,10 @@ else
     alias ls='ls --color=auto'
 fi
 
+function dcd {
+    cd "$(dirname "$1")"
+}
+
 function _robpol86_run_once {
     echo -e "\\033[36m=> INFO: Setting git configs.\\033[0m"
     git config --global alias.exec '!exec '

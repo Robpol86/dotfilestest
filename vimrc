@@ -1,3 +1,5 @@
+set modelines=0
+set nomodeline
 colorscheme ron
 filetype indent plugin on
 au FileType gitcommit set t_BE=

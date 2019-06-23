@@ -50,7 +50,7 @@ test -d /Library/Frameworks/Python.framework/Versions/3.4/bin && PATH="$PATH:$_"
 test -d /Library/Frameworks/Python.framework/Versions/3.5/bin && PATH="$PATH:$_"
 
 # Misc PATH.
-PATH="$PATH:$HOME/bin"
+PATH="$PATH:/usr/local/sbin:$HOME/bin"
 
 # Bash completion.
 for path in /usr/local/etc/bash_completion /usr/share/bash-completion/bash_completion /etc/bash_completion; do

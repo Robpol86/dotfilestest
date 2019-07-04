@@ -1,0 +1,3 @@
+ControlMaster auto
+ControlPath ~/.ssh/ssh_control_%h_%p_%r
+ForwardAgent yes

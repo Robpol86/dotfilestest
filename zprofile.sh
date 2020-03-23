@@ -1,17 +1,28 @@
 #!/bin/zsh
 
 # https://github.com/Robpol86/dotfiles
-# Interactive shells.
 
-# Colors and terminal.
-CLICOLOR=1
-GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-LC_CTYPE=en_US.UTF-8
-LSCOLORS=gxGxFxdxbxDxDxBxBxExEx
+# PATH.
+PATH="/opt/local/bin:/opt/local/sbin:$PATH:/usr/local/sbin:$HOME/bin"
 
 # Golang.
 export GOPATH=$HOME/gocode
 PATH="$PATH:$GOPATH/bin"
 
-# Misc PATH.
-PATH="/opt/local/bin:/opt/local/sbin:$PATH:/usr/local/sbin:$HOME/bin"
+function dcd {
+    cd "$(dirname "$1")" || return "$?"
+}
+
+function _robpol86_run_once {
+    echo -e "\\033[36m=> INFO: Setting git configs.\\033[0m"
+    git config --global alias.exec '!exec '
+    git config --global color.ui true
+    git config --global core.editor vim
+    git config --global core.excludesfile ~/.gitignore
+    git config --global diff.tool vimdiff
+    git config --global merge.tool vimdiff
+    git config --global rerere.enabled true
+    git config --global user.email robpol86@gmail.com
+    git config --global user.name Robpol86
+    test -e ~/.gitignore || echo $'.DS_Store\n.idea/\nvenv/\n.venv/' > ~/.gitignore
+}

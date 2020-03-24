@@ -25,4 +25,16 @@ function _robpol86_run_once {
     git config --global user.email robpol86@gmail.com
     git config --global user.name Robpol86
     test -e ~/.gitignore || echo $'.DS_Store\n.idea/\nvenv/\n.venv/' > ~/.gitignore
+    git config --global color.diff-highlight.newHighlight   "black 40"
+    git config --global color.diff-highlight.newNormal      "green bold"
+    git config --global color.diff-highlight.oldHighlight   "black 160"
+    git config --global color.diff-highlight.oldNormal      "red bold"
+    git config --global color.diff.commit       "yellow bold"
+    git config --global color.diff.frag         "magenta bold"
+    git config --global color.diff.meta         "11"
+    git config --global color.diff.new          "green bold"
+    git config --global color.diff.old          "red bold"
+    git config --global color.diff.whitespace   "red reverse"
+    git config --global color.ui    "true"
+    git config --global core.pager  "$HOME/workspace/diff-so-fancy/diff-so-fancy |less --tabs=4 -RFX"
 }

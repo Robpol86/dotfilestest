@@ -19,6 +19,13 @@ bindkey -s "^[Oq" "1"; bindkey -s "^[Or" "2"; bindkey -s "^[Os" "3"; bindkey -s 
 bindkey -s "^[Op" "0"; bindkey -s "^[Ol" "."
 # Bash-like
 bindkey "^U" backward-kill-line
+backward-kill-word-bash () {
+    # By sitaktif: https://unix.stackexchange.com/a/586378/206171
+    local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>:,"'"'"
+    zle -f kill # Append to the kill ring on subsequent kills.
+    zle backward-kill-word
+}
+bindkey "^W" backward-kill-word-bash && zle -N "$_"
 
 # Aliases
 alias lower="tr '[:upper:]' '[:lower:]'"

@@ -36,3 +36,4 @@ HISTSIZE=50000  # Number of lines kept in memory.
 SAVEHIST=999999  # Number of lines stored on disk.
 setopt extended_history  # Timestamps in history file.
 setopt hist_ignore_all_dups
+unsetopt share_history

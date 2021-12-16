@@ -5,12 +5,6 @@
 # PATH.
 PATH="/opt/local/bin:/opt/local/sbin:$PATH:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/local/go/bin:$HOME/.poetry/bin"
 
-# WSL.
-if [ -f "$HOME/.keychain/$HOST-sh" ]; then
-    keychain --nogui --quiet
-    source "$HOME/.keychain/$HOST-sh"
-fi
-
 # Golang.
 export GOPATH=$HOME/gocode
 PATH="$PATH:$GOPATH/bin"

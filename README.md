@@ -8,6 +8,9 @@ Used on OS X and Linux (Fedora/RHEL/Centos/Ubuntu/Debian).
 
 ```shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+```shell
 git -C "$ZSH_CUSTOM/plugins" clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 git clone https://github.com/so-fancy/diff-so-fancy.git "$HOME/workspace/diff-so-fancy"
 git clone https://github.com/Robpol86/dotfiles.git "$HOME/workspace/dotfiles" && cd "$_" && \

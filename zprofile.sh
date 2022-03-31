@@ -16,6 +16,7 @@ function dcd {
 function _robpol86_run_once {
     echo -e "\\033[36m=> INFO: Setting git configs.\\033[0m"
     git config --global alias.exec '!exec '
+    git config --global alias.set-upstream '!git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)'
     git config --global color.ui true
     git config --global core.editor vim
     git config --global core.excludesfile ~/.gitignore

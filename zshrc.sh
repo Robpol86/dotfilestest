@@ -30,6 +30,10 @@ bindkey "^W" backward-kill-word-bash && zle -N "$_"
 # Aliases
 alias lower="tr '[:upper:]' '[:lower:]'"
 alias upper="tr '[:lower:]' '[:upper:]'"
+if [ -n "${WSL_DISTRO_NAME:-}" ]; then
+    alias pbcopy="xsel -i --clipboard"
+    alias pbpaste="xsel -o --clipboard"
+fi
 
 # History.
 HISTSIZE=50000  # Number of lines kept in memory.

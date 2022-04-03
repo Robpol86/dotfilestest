@@ -8,7 +8,7 @@ ZSH_THEME="robpol86"
 CASE_SENSITIVE="true"
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
-plugins=(docker git kubectl macports virtualenv zsh-syntax-highlighting)
+plugins=(docker git macports virtualenv zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
 
 # Numpad https://superuser.com/questions/742171/zsh-z-shell-numpad-numlock-doesnt-work/742193

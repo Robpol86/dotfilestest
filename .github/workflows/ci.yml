@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+
+  sanity:
+    name: Sanity Checks
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out repository code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y shellcheck zsh
+
+      - name: Lint install.sh
+        run: shellcheck ./install.sh
+
+      - name: Run install.sh
+        run: ./install.sh

@@ -17,7 +17,7 @@ ZSH_CUSTOM="${ZSH_CUSTOM:-"$ZSH/custom"}"
 
 # Print error to stderr.
 error() (
-    set +x
+    { set +x; } 2>/dev/null
     printf '\e[31m=> %02d:%02d:%02d ERROR: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*" >&2
 )
 
@@ -29,13 +29,13 @@ errex() {
 
 # Print warning to stderr.
 warning() (
-    set +x
+    { set +x; } 2>/dev/null
     printf '\e[33m=> %02d:%02d:%02d WARNING: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*" >&2
 )
 
 # Print normal messages to stdout.
 info() (
-    set +x
+    { set +x; } 2>/dev/null
     printf '\e[36m=> %02d:%02d:%02d INFO: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*"
 )
 

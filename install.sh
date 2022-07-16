@@ -11,6 +11,7 @@ set -o xtrace  # Print commands before executing them.
 
 CODESPACES="${CODESPACES:-}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NAME="$(basename "${BASH_SOURCE[0]}")"
 ZSH="${ZSH:-"$HOME/.oh-my-zsh"}"
 ZSH_CUSTOM="${ZSH_CUSTOM:-"$ZSH/custom"}"
 
@@ -72,6 +73,8 @@ do_install_omz() {
 
 # Main function.
 main() {
+    info "Installing dotfiles via $NAME..."
+
     do_install_omz
 
     info Installing Zsh and Git plugins

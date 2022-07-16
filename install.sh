@@ -66,7 +66,7 @@ main() {
     test -e "$ZSH_CUSTOM/plugins/diff-so-fancy" ||
         git clone --depth=1 "https://github.com/so-fancy/diff-so-fancy.git" "$_"  # Not really a zsh plugin.
     echo "Installing theme"
-    ln -fsv {"$HERE","$ZSH_CUSTOM"}/themes/robpol86.zsh-theme
+    ln -fsv {"$HERE","$ZSH_CUSTOM/themes"}/robpol86.zsh-theme
 
 #    info Symlinking dotfiles
 #    symlink "$HERE/vimrc" "$HOME/.vimrc"

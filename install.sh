@@ -7,6 +7,7 @@
 set -o errexit  # Exit script if a command fails.
 set -o nounset  # Treat unset variables as errors and exit immediately.
 set -o pipefail  # Exit script if pipes fail instead of just the last program.
+set -o xtrace  # Print commands before executing them.
 
 CODESPACES="${CODESPACES:-}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -14,9 +15,10 @@ ZSH="${ZSH:-"$HOME/.oh-my-zsh"}"
 ZSH_CUSTOM="${ZSH_CUSTOM:-"$ZSH/custom"}"
 
 # Print error to stderr.
-error() {
+error() (
+    set +x
     printf '\e[31m=> %02d:%02d:%02d ERROR: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*" >&2
-}
+)
 
 # Print error to stderr and exit 1.
 errex() {
@@ -25,14 +27,16 @@ errex() {
 }
 
 # Print warning to stderr.
-warning() {
+warning() (
+    set +x
     printf '\e[33m=> %02d:%02d:%02d WARNING: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*" >&2
-}
+)
 
 # Print normal messages to stdout.
-info() {
+info() (
+    set +x
     printf '\e[36m=> %02d:%02d:%02d INFO: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*"
-}
+)
 
 # Verify source path exists and then symlink it to the target path.
 symlink() {
@@ -69,7 +73,6 @@ do_install_omz() {
 # Main function.
 main() {
     do_install_omz
-    set -o xtrace  # Print commands before executing them.
 
     info Installing Zsh and Git plugins
     clone_or_pull https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"

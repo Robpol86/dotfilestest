@@ -56,47 +56,38 @@ clone_or_pull() {
     fi
 }
 
-# Install OMZ.
-do_install_omz() {
-    command -v zsh || command "$_"  # Print error if zsh command not found.
-    if [ ! -e "$ZSH" ]; then
-        info Installing Oh My Zsh
-        RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    elif [ -n "$CODESPACES" ]; then
-        info Setting codespace shell to Zsh
-        sudo chsh -s "$(command -v zsh)"
-    else
-        info Setting shell to Zsh
-        chsh -s "$(command -v zsh)"
-    fi
-}
-
 # Main function.
 main() {
-    info "Installing dotfiles via $NAME..."
+    # Install OMZ.
+    command -v zsh || command "$_"  # Print error if zsh command not found.
+    if [ -n "$CODESPACES" ]; then  # Running from a GitHub codespace. OMZ is pre-installed, just change shell.
+        info "Changing codespace shell to zsh"
+        sudo chsh -s "$(command -v zsh)" "$USER"
+    elif [ ! -e "$ZSH" ]; then  # OMZ not installed, installing.
+        info "Installing Oh My Zsh"
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    else  # OMZ already installed.
+        info "Oh My Zsh is already installed"
+    fi
 
-    do_install_omz
-
-    info Installing Zsh and Git plugins
-    clone_or_pull https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-    clone_or_pull https://github.com/so-fancy/diff-so-fancy.git "$ZSH_CUSTOM/plugins/diff-so-fancy"  # Not really a zsh plugin.
-    symlink "$HERE/themes/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
-
-    info Symlinking dotfiles
-    symlink "$HERE/vimrc" "$HOME/.vimrc"
-    symlink "$HERE/zshrc.sh" "$HOME/.zshrc"
-    symlink "$HERE/zprofile.sh" "$HOME/.zprofile"
-
-    info Install SSH config
-    install -m0700 -d "$HOME/.ssh"
-    symlink "$HERE/ssh_config" "$HOME/.ssh/config"
-
-    info Execute run-once commands
-    zsh -lc _robpol86_run_once
+#    info Installing Zsh and Git plugins
+#    clone_or_pull https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+#    clone_or_pull https://github.com/so-fancy/diff-so-fancy.git "$ZSH_CUSTOM/plugins/diff-so-fancy"  # Not really a zsh plugin.
+#    symlink "$HERE/themes/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
+#
+#    info Symlinking dotfiles
+#    symlink "$HERE/vimrc" "$HOME/.vimrc"
+#    symlink "$HERE/zshrc.sh" "$HOME/.zshrc"
+#    symlink "$HERE/zprofile.sh" "$HOME/.zprofile"
+#
+#    info Install SSH config
+#    install -m0700 -d "$HOME/.ssh"
+#    symlink "$HERE/ssh_config" "$HOME/.ssh/config"
+#
+#    info Execute run-once commands
+#    zsh -lc _robpol86_run_once
 }
 
-# Main.
+info "Begin installing dotfiles via $NAME..."
 main
-
-# Success.
-info Success
+info "Done installing dotfiles via $NAME..."

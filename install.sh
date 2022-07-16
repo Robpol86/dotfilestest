@@ -45,34 +45,27 @@ symlink() {
     ln -fsv "$1" "$2"
 }
 
-# Git clone or pull if already cloned.
-clone_or_pull() {
-    url="$1"
-    dir="$2"
-    if [ ! -e "$dir" ]; then
-        git clone --depth=1 "$url" "$dir"
-    else
-        git -C "$dir" pull
-    fi
-}
-
 # Main function.
 main() {
     # Install OMZ.
     command -v zsh || command "$_"  # Print error if zsh command not found.
     if [ -n "$CODESPACES" ]; then  # Running from a GitHub codespace. OMZ is pre-installed, just change shell.
-        info "Changing codespace shell to zsh"
+        echo "Changing codespace shell to zsh"
         sudo chsh -s "$(command -v zsh)" "$USER"
     elif [ ! -e "$ZSH" ]; then  # OMZ not installed, installing.
-        info "Installing Oh My Zsh"
+        echo "Installing Oh My Zsh"
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else  # OMZ already installed.
-        info "Oh My Zsh is already installed"
+        echo "Oh My Zsh is already installed"
     fi
 
-#    info Installing Zsh and Git plugins
-#    clone_or_pull https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-#    clone_or_pull https://github.com/so-fancy/diff-so-fancy.git "$ZSH_CUSTOM/plugins/diff-so-fancy"  # Not really a zsh plugin.
+    # Install plugins an themes.
+    echo "Installing plugins"
+    test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
+        git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
+    test -e "$ZSH_CUSTOM/plugins/diff-so-fancy" ||
+        git clone --depth=1 "https://github.com/so-fancy/diff-so-fancy.git" "$_"  # Not really a zsh plugin.
+    echo "Installing themes"
 #    symlink "$HERE/themes/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
 #
 #    info Symlinking dotfiles
@@ -88,6 +81,6 @@ main() {
 #    zsh -lc _robpol86_run_once
 }
 
-info "Begin installing dotfiles via $NAME..."
+echo "Begin installing dotfiles via $NAME..."
 main
-info "Done installing dotfiles via $NAME..."
+echo "Done installing dotfiles via $NAME..."

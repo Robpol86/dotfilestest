@@ -59,15 +59,15 @@ main() {
         echo "Oh My Zsh is already installed"
     fi
 
-    # Install plugins an themes.
+    # Install plugins and themes.
     echo "Installing plugins"
     test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
         git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
     test -e "$ZSH_CUSTOM/plugins/diff-so-fancy" ||
         git clone --depth=1 "https://github.com/so-fancy/diff-so-fancy.git" "$_"  # Not really a zsh plugin.
-    echo "Installing themes"
-#    symlink "$HERE/themes/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
-#
+    echo "Installing theme"
+    ln -fsv {"$HERE","$ZSH_CUSTOM"}/themes/robpol86.zsh-theme
+
 #    info Symlinking dotfiles
 #    symlink "$HERE/vimrc" "$HOME/.vimrc"
 #    symlink "$HERE/zshrc.sh" "$HOME/.zshrc"

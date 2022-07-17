@@ -70,7 +70,7 @@ main() {
     ln -fsv "$HERE/ssh_config" "$HOME/.ssh/config"
 
     echo "Configure git"
-    zsh -lc "_robpol86_git_config \"$ZSH_CUSTOM\""
+    zsh -lc "_robpol86_git_config '$ZSH_CUSTOM'"
 }
 
 echo "Begin installing dotfiles via $NAME..."

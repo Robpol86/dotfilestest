@@ -36,7 +36,6 @@ function _robpol86_git_config {
     git config --global color.diff.new          "green bold"
     git config --global color.diff.old          "red bold"
     git config --global color.diff.whitespace   "red reverse"
-    git config --global color.ui    "true"
 
     echo -e "\\033[36m=> INFO: Enabling git diff-so-fancy.\\033[0m"
     local pager="${1:-"$ZSH_CUSTOM"}/plugins/diff-so-fancy/diff-so-fancy"

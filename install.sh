@@ -50,16 +50,11 @@ main() {
 
 # Set VS Code defaults if running on a new GitHub Codespaces VM.
 config_vscode() {
-    local settings_json_dir="$HOME/.config/Code/User"
-    local settings_json="$settings_json_dir/settings.json"
-    if [ -e "$settings_json" ]; then
-        echo "Skip configuring VS Code, file exists"
-        return
-    fi
+    local settings_json="$HOME/.vscode-remote/data/Machine/settings.json"
 
     echo "Configuring VS Code"
-    mkdir -pv "$settings_json_dir"
-    ln -fsv "$HERE/settings.json" "$settings_json"
+    jq -rsS ".[0] * .[1]" "$settings_json" "$HERE/settings.json" > "$settings_json.new"
+    mv -v "$settings_json.new" "$settings_json"
 }
 
 echo "Begin installing dotfiles via $NAME..."

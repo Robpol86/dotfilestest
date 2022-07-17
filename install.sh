@@ -58,7 +58,7 @@ config_vscode() {
     fi
 
     echo "Configuring VS Code"
-    mkdir -p "$settings_json_dir"
+    mkdir -pv "$settings_json_dir"
     ln -fsv "$HERE/settings.json" "$settings_json"
 }
 

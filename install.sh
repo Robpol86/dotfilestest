@@ -65,18 +65,16 @@ main() {
         git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
     test -e "$ZSH_CUSTOM/plugins/diff-so-fancy" ||
         git clone --depth=1 "https://github.com/so-fancy/diff-so-fancy.git" "$_"  # Not really a zsh plugin.
-    echo "Installing theme"
-    ln -fsv {"$HERE","$ZSH_CUSTOM/themes"}/robpol86.zsh-theme
+    echo "Symlinking theme"
+    ln -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
 
-#    info Symlinking dotfiles
-#    symlink "$HERE/vimrc" "$HOME/.vimrc"
-#    symlink "$HERE/zshrc.sh" "$HOME/.zshrc"
-#    symlink "$HERE/zprofile.sh" "$HOME/.zprofile"
-#
-#    info Install SSH config
-#    install -m0700 -d "$HOME/.ssh"
-#    symlink "$HERE/ssh_config" "$HOME/.ssh/config"
-#
+    echo "Symlinking other files"
+    ln -fsv "$HERE/vimrc" "$HOME/.vimrc"
+    ln -fsv "$HERE/zshrc.sh" "$HOME/.zshrc"
+    ln -fsv "$HERE/zprofile.sh" "$HOME/.zprofile"
+    install -m0700 -d "$HOME/.ssh"
+    ln -fsv "$HERE/ssh_config" "$HOME/.ssh/config"
+
 #    info Execute run-once commands
 #    zsh -lc _robpol86_run_once
 }

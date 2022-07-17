@@ -41,7 +41,7 @@ function _robpol86_git_config {
     echo -e "\\033[36m=> INFO: Enabling git diff-so-fancy.\\033[0m"
     local pager="${1:-"$ZSH_CUSTOM"}/plugins/diff-so-fancy/diff-so-fancy"
     if [ ! -e "$pager" ]; then
-        echo -e "\\033[33m=> ERROR: Pager file not found: $pager\\033[0m"
+        echo -e "\\033[31m=> ERROR: Pager file not found: $pager\\033[0m"
         return 1
     fi
     git config --global core.pager  "$pager |less --tabs=4 -RFX"

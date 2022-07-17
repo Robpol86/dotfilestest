@@ -44,5 +44,5 @@ function _robpol86_git_config {
         echo -e "\\033[31m=> ERROR: Pager file not found: $pager\\033[0m"
         return 1
     fi
-    git config --global core.pager  "$pager |less --tabs=4 -RFX"
+    git config --global core.pager "$pager |less --tabs=4 -RFX"
 }

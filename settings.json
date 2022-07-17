@@ -1,0 +1,7 @@
+{
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.osx": "/bin/zsh",
+  "terminal.integrated.shellIntegration.enabled": true,
+  "window.menuBarVisibility": "classic",
+  "workbench.colorTheme": "Default Dark+"
+}

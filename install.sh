@@ -29,7 +29,6 @@ main() {
         echo "Oh My Zsh is already installed"
     fi
 
-    # Install plugins and themes.
     echo "Installing plugins"
     test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
         git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
@@ -45,10 +44,25 @@ main() {
     install -m0700 -d "$HOME/.ssh"
     ln -fsv "$HERE/ssh_config" "$HOME/.ssh/config"
 
-    echo "Configure git"
+    echo "Configuring git"
     zsh -lc "_robpol86_git_config '$ZSH_CUSTOM'"
+}
+
+# Set VS Code defaults if running on a new GitHub Codespaces VM.
+config_vscode() {
+    local settings_json_dir="$HOME/.config/Code/User"
+    local settings_json="$settings_json_dir/settings.json"
+    if [ -e "$settings_json" ]; then
+        echo "Skip configuring VS Code, file exists"
+        return
+    fi
+
+    echo "Configuring VS Code"
+    mkdir -p "$settings_json_dir"
+    ln -fsv "$HERE/settings.json" "$settings_json"
 }
 
 echo "Begin installing dotfiles via $NAME..."
 main
+[ -z "$CODESPACES" ] || config_vscode
 echo "Done installing dotfiles via $NAME..."

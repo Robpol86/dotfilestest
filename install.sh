@@ -39,12 +39,6 @@ info() (
     printf '\e[36m=> %02d:%02d:%02d INFO: %s\e[0m\n' $((SECONDS/3600)) $((SECONDS%3600/60)) $((SECONDS%60)) "$*"
 )
 
-# Verify source path exists and then symlink it to the target path.
-symlink() {
-    test -e "$1" || errex "File not found: $1"
-    ln -fsv "$1" "$2"
-}
-
 # Main function.
 main() {
     # Install OMZ.
@@ -75,8 +69,8 @@ main() {
     install -m0700 -d "$HOME/.ssh"
     ln -fsv "$HERE/ssh_config" "$HOME/.ssh/config"
 
-#    info Execute run-once commands
-#    zsh -lc _robpol86_run_once
+    echo "Configure git"
+    zsh -lc _robpol86_git_config
 }
 
 echo "Begin installing dotfiles via $NAME..."

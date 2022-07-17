@@ -37,5 +37,5 @@ function _robpol86_git_config {
     git config --global color.diff.old          "red bold"
     git config --global color.diff.whitespace   "red reverse"
     git config --global color.ui    "true"
-    git config --global core.pager  "$ZSH_CUSTOM/plugins/diff-so-fancy/diff-so-fancy |less --tabs=4 -RFX"
+    git config --global core.pager  "${1:-"$ZSH_CUSTOM"}/plugins/diff-so-fancy/diff-so-fancy |less --tabs=4 -RFX"
 }

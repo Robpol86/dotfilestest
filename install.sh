@@ -57,7 +57,7 @@ config_vscode() {
     mv -v "$settings_json.new" "$settings_json"
 
     echo "Restarting VS Code"
-    ps ux |grep vscode-remote |awk '{print $2}' |xargs kill  # TODO better
+    # ps ux |grep vscode-remote |awk '{print $2}' |xargs kill  # TODO better
 }
 
 echo "Begin installing dotfiles via $NAME..."

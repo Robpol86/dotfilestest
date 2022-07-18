@@ -60,12 +60,12 @@ dotfiles_zsh() {
 
 # Main function.
 main() {
-    echo "Begin installing dotfiles via $NAME..."
-    gh_cs_vscode_defaults
+    echo "🔃 Begin installing dotfiles via $NAME..."
     dotfiles_common
     dotfiles_bash
     dotfiles_zsh
-    echo "Done installing dotfiles via $NAME..."
+    gh_cs_vscode_defaults
+    echo "✅ Done installing dotfiles via $NAME..."
 
 #    # Install OMZ.
 #    command -v zsh || command "$_"  # Print error if zsh command not found.

@@ -1,6 +1,8 @@
 #!/bin/zsh
 
-# https://github.com/Robpol86/dotfiles
+# Functions and aliases for zsh.
+
+source ~/.commonrc
 
 # zsh
 export ZSH="$HOME/.oh-my-zsh"
@@ -12,11 +14,22 @@ plugins=(docker git macports virtualenv zsh-syntax-highlighting)
 source "$ZSH/oh-my-zsh.sh"
 
 # Numpad https://superuser.com/questions/742171/zsh-z-shell-numpad-numlock-doesnt-work/742193
-bindkey -s "^[Oo" "/"; bindkey -s "^[Oj" "*"; bindkey -s "^[Om" "-"
-bindkey -s "^[Ow" "7"; bindkey -s "^[Ox" "8"; bindkey -s "^[Oy" "9"; bindkey -s "^[Ok" "+"
-bindkey -s "^[Ot" "4"; bindkey -s "^[Ou" "5"; bindkey -s "^[Ov" "6"
-bindkey -s "^[Oq" "1"; bindkey -s "^[Or" "2"; bindkey -s "^[Os" "3"; bindkey -s "^[OM" "^M"
-bindkey -s "^[Op" "0"; bindkey -s "^[Ol" "."
+bindkey -s "^[Oj" "*"
+bindkey -s "^[Ok" "+"
+bindkey -s "^[Ol" "."
+bindkey -s "^[Om" "-"
+bindkey -s "^[OM" "^M"
+bindkey -s "^[Oo" "/"
+bindkey -s "^[Op" "0"
+bindkey -s "^[Oq" "1"
+bindkey -s "^[Or" "2"
+bindkey -s "^[Os" "3"
+bindkey -s "^[Ot" "4"
+bindkey -s "^[Ou" "5"
+bindkey -s "^[Ov" "6"
+bindkey -s "^[Ow" "7"
+bindkey -s "^[Ox" "8"
+bindkey -s "^[Oy" "9"
 # Bash-like
 bindkey "^U" backward-kill-line
 backward-kill-word-bash () {
@@ -26,14 +39,6 @@ backward-kill-word-bash () {
     zle backward-kill-word
 }
 bindkey "^W" backward-kill-word-bash && zle -N "$_"
-
-# Aliases
-alias lower="tr '[:upper:]' '[:lower:]'"
-alias upper="tr '[:lower:]' '[:upper:]'"
-if [ -n "${WSL_DISTRO_NAME:-}" ]; then
-    alias pbcopy="xsel -i --clipboard"
-    alias pbpaste="xsel -o --clipboard"
-fi
 
 # History.
 HISTSIZE=50000  # Number of lines kept in memory.

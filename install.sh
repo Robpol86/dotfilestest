@@ -34,6 +34,20 @@ dotfiles_common() {
     curl -sSfL "https://github.com/so-fancy/diff-so-fancy/releases/latest/download/diff-so-fancy" -o ~/.git-diff-so-fancy
     chmod +x ~/.git-diff-so-fancy
     git config --global core.pager "$HOME/.git-diff-so-fancy |less --tabs=4 -RFX"
+
+    echo "⏩ Setup other dotfiles"
+    ln -fsv "$HERE/commonrc.sh" ~/.commonrc
+}
+
+# Setup bash dotfiles.
+dotfiles_bash() {
+    echo "⏩ Setup bash dotfiles"
+    ln -fsv "$HERE/bashrc.sh" ~/.bashrc
+}
+
+# Setup zsh dotfiles.
+dotfiles_zsh() {
+    :  # TODO cli argument requiring zsh or not?
 }
 
 # Configure git.
@@ -51,6 +65,7 @@ config_git() {
     git config --global color.diff.whitespace "red reverse"
 
     echo "⏩ Setup git command aliases"
+    # shellcheck disable=SC2016
     git config --global alias.set-upstream '!git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)'
 
     echo "⏩ Setup remaining git settings"
@@ -59,16 +74,6 @@ config_git() {
     git config --global diff.tool vimdiff
     git config --global merge.tool vimdiff
     git config --global rerere.enabled true
-}
-
-# Setup bash dotfiles.
-dotfiles_bash() {
-    :  # TODO
-}
-
-# Setup zsh dotfiles.
-dotfiles_zsh() {
-    :  # TODO cli argument requiring zsh or not?
 }
 
 # Configure VS Code defaults.
@@ -86,9 +91,9 @@ vscode_defaults() {
 main() {
     echo "🔃 Begin installing dotfiles via $NAME..."
     dotfiles_common
-    config_git
     dotfiles_bash
     dotfiles_zsh
+    config_git
     if [ -n "$CODESPACES" ]; then
         vscode_defaults
     fi

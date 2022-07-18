@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Lint install.sh
-        run: shellcheck ./install.sh
+      - name: Lint
+        run: shellcheck ./install.sh ./commonrc.sh ./bashrc.sh

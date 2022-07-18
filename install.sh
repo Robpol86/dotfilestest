@@ -20,15 +20,11 @@ ZSH_CUSTOM="${ZSH_CUSTOM:-"$ZSH/custom"}"
 # Setup shell-agnostic dotfiles.
 dotfiles_common() {
     echo "⏩ Setup ssh config"
-    if [ -e ~/.ssh/config ] && [ ! -L ~/.ssh/config ]; then
-        echo "❌ SSH config already exists, aborting" >&2
-        exit 1
-    fi
     install -m0700 -d ~/.ssh
-    ln -fsv "$HERE/ssh_config" ~/.ssh/config
+    ln --backup=numbered -fsv "$HERE/ssh_config" ~/.ssh/config
 
     echo "⏩ Setup vim config"
-    ln -fsv "$HERE/vimrc" ~/.vimrc
+    ln --backup=numbered -fsv "$HERE/vimrc" ~/.vimrc
 
     echo "⏩ Setup git diff formatter"
     curl -sSfL "https://github.com/so-fancy/diff-so-fancy/releases/latest/download/diff-so-fancy" -o ~/.git-diff-so-fancy
@@ -36,13 +32,13 @@ dotfiles_common() {
     git config --global core.pager "$HOME/.git-diff-so-fancy |less --tabs=4 -RFX"
 
     echo "⏩ Setup other dotfiles"
-    ln -fsv "$HERE/commonrc.sh" ~/.commonrc
+    ln --backup=numbered -fsv "$HERE/commonrc.sh" ~/.commonrc
 }
 
 # Setup bash dotfiles.
 dotfiles_bash() {
     echo "⏩ Setup bash dotfiles"
-    ln -fsv "$HERE/bashrc.sh" ~/.bashrc
+    ln --backup=numbered -fsv "$HERE/bashrc.sh" ~/.bashrc
 }
 
 # Setup zsh dotfiles.
@@ -115,11 +111,11 @@ main() {
 #    test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
 #        git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
 #    echo "Symlinking theme"
-#    ln -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
+#    ln --backup=numbered -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
 #
 #    echo "Symlinking other files"
-#    ln -fsv "$HERE/zshrc.sh" "~/.zshrc"
-#    ln -fsv "$HERE/zprofile.sh" "~/.zprofile"
+#    ln --backup=numbered -fsv "$HERE/zshrc.sh" "~/.zshrc"
+#    ln --backup=numbered -fsv "$HERE/zprofile.sh" "~/.zprofile"
 #
 #    echo "Configuring git"
 #    zsh -lc "_robpol86_git_config '$ZSH_CUSTOM'"

@@ -36,12 +36,4 @@ function _robpol86_git_config {
     git config --global color.diff.new          "green bold"
     git config --global color.diff.old          "red bold"
     git config --global color.diff.whitespace   "red reverse"
-
-    echo -e "\\033[36m=> INFO: Enabling git diff-so-fancy.\\033[0m"
-    local pager="${1:-"$ZSH_CUSTOM"}/plugins/diff-so-fancy/diff-so-fancy"
-    if [ ! -e "$pager" ]; then
-        echo -e "\\033[31m=> ERROR: Pager file not found: $pager\\033[0m"
-        return 1
-    fi
-    git config --global core.pager "$pager |less --tabs=4 -RFX"
 }

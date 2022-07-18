@@ -14,38 +14,26 @@ set -o xtrace  # Print commands before executing them.
 CODESPACES="${CODESPACES:-}"
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NAME="$(basename "${BASH_SOURCE[0]}")"
-ZSH="${ZSH:-"$HOME/.oh-my-zsh"}"
+ZSH="${ZSH:-~/.oh-my-zsh}"
 ZSH_CUSTOM="${ZSH_CUSTOM:-"$ZSH/custom"}"
-
-# Configure VS Code defaults if running from GitHub codespace.
-gh_cs_vscode_defaults() {
-    if [ -z "$CODESPACES" ]; then
-        return  # Not running from GitHub codespace.
-    fi
-    local settings_json="$HOME/.vscode-remote/data/Machine/settings.json"
-
-    echo "Pre-configuring VS Code"
-    jq -rsS ".[0] * .[1]" "$settings_json" "$HERE/settings-gh-cs.json" > "$settings_json.new"
-    mv -v "$settings_json.new" "$settings_json"
-
-    # echo "Restarting VS Code"
-    # ps ux |grep vscode-remote |awk '{print $2}' |xargs kill  # TODO better
-}
 
 # Setup shell-agnostic dotfiles.
 dotfiles_common() {
-    echo "Symlinking common dotfiles"
-
-    # SSH
-    if [ -e "$HOME/.ssh/config" ] && [ ! -L "$HOME/.ssh/config" ]; then
-        echo "SSH config exists, aborting" >&2
+    echo "⏩ Setup ssh config"
+    if [ -e ~/.ssh/config ] && [ ! -L ~/.ssh/config ]; then
+        echo "❌ SSH config already exists, aborting" >&2
         exit 1
     fi
-    install -m0700 -d "$HOME/.ssh"
-    ln -fsv "$HERE/ssh_config" "$HOME/.ssh/config"
+    install -m0700 -d ~/.ssh
+    ln -fsv "$HERE/ssh_config" ~/.ssh/config
 
-    # VIM
-    ln -fsv "$HERE/vimrc" "$HOME/.vimrc"
+    echo "⏩ Setup vim config"
+    ln -fsv "$HERE/vimrc" ~/.vimrc
+
+    echo "⏩ Setup git diff formatter"
+    curl -sSfL "https://github.com/so-fancy/diff-so-fancy/releases/latest/download/diff-so-fancy" -o ~/.git-diff-so-fancy
+    chmod +x ~/.git-diff-so-fancy
+    git config --global core.pager "$HOME/.git-diff-so-fancy |less --tabs=4 -RFX"
 }
 
 # Setup bash dotfiles.
@@ -58,13 +46,26 @@ dotfiles_zsh() {
     :  # TODO cli argument requiring zsh or not?
 }
 
+# Configure VS Code defaults.
+vscode_defaults() {
+    echo "Pre-configuring VS Code"
+    local settings_json=~/.vscode-remote/data/Machine/settings.json
+    jq -rsS ".[0] * .[1]" "$settings_json" "$HERE/settings-gh-cs.json" > "$settings_json.new"
+    mv -v "$settings_json.new" "$settings_json"
+
+    # echo "Restarting VS Code"
+    # ps ux |grep vscode-remote |awk '{print $2}' |xargs kill  # TODO better
+}
+
 # Main function.
 main() {
     echo "🔃 Begin installing dotfiles via $NAME..."
     dotfiles_common
     dotfiles_bash
     dotfiles_zsh
-    gh_cs_vscode_defaults
+    if [ -n "$CODESPACES" ]; then
+        vscode_defaults
+    fi
     echo "✅ Done installing dotfiles via $NAME..."
 
 #    # Install OMZ.
@@ -82,14 +83,12 @@ main() {
 #    echo "Installing plugins"
 #    test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
 #        git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
-#    test -e "$ZSH_CUSTOM/plugins/diff-so-fancy" ||
-#        git clone --depth=1 "https://github.com/so-fancy/diff-so-fancy.git" "$_"  # Not really a zsh plugin.
 #    echo "Symlinking theme"
 #    ln -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
 #
 #    echo "Symlinking other files"
-#    ln -fsv "$HERE/zshrc.sh" "$HOME/.zshrc"
-#    ln -fsv "$HERE/zprofile.sh" "$HOME/.zprofile"
+#    ln -fsv "$HERE/zshrc.sh" "~/.zshrc"
+#    ln -fsv "$HERE/zprofile.sh" "~/.zprofile"
 #
 #    echo "Configuring git"
 #    zsh -lc "_robpol86_git_config '$ZSH_CUSTOM'"

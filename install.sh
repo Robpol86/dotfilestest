@@ -36,6 +36,31 @@ dotfiles_common() {
     git config --global core.pager "$HOME/.git-diff-so-fancy |less --tabs=4 -RFX"
 }
 
+# Configure git.
+config_git() {
+    echo "⏩ Setup git diff colors"
+    git config --global color.diff-highlight.newHighlight "black 40"
+    git config --global color.diff-highlight.newNormal "green bold"
+    git config --global color.diff-highlight.oldHighlight "black 160"
+    git config --global color.diff-highlight.oldNormal "red bold"
+    git config --global color.diff.commit "yellow bold"
+    git config --global color.diff.frag "magenta bold"
+    git config --global color.diff.meta "11"
+    git config --global color.diff.new "green bold"
+    git config --global color.diff.old "red bold"
+    git config --global color.diff.whitespace "red reverse"
+
+    echo "⏩ Setup git command aliases"
+    git config --global alias.set-upstream '!git branch --set-upstream-to=origin/$(git symbolic-ref --short HEAD)'
+
+    echo "⏩ Setup remaining git settings"
+    git config --global color.ui true
+    git config --global core.editor vim
+    git config --global diff.tool vimdiff
+    git config --global merge.tool vimdiff
+    git config --global rerere.enabled true
+}
+
 # Setup bash dotfiles.
 dotfiles_bash() {
     :  # TODO
@@ -61,6 +86,7 @@ vscode_defaults() {
 main() {
     echo "🔃 Begin installing dotfiles via $NAME..."
     dotfiles_common
+    config_git
     dotfiles_bash
     dotfiles_zsh
     if [ -n "$CODESPACES" ]; then

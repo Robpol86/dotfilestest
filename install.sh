@@ -37,8 +37,9 @@ dotfiles_common() {
 
 # Setup bash dotfiles.
 dotfiles_bash() {
-    echo "⏩ Setup bash dotfiles"
-    ln --backup=numbered -fsv "$HERE/bashrc.sh" ~/.bashrc
+    :
+#    echo "⏩ Setup bash dotfiles"
+#    ln --backup=numbered -fsv "$HERE/bashrc.sh" ~/.bashrc
 }
 
 # Setup zsh dotfiles.

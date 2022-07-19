@@ -45,6 +45,27 @@ dotfiles_bash() {
 # Setup zsh dotfiles.
 dotfiles_zsh() {
     :  # TODO cli argument requiring zsh or not?
+#    # Install OMZ.
+#    command -v zsh || command "$_"  # Print error if zsh command not found.
+#    if [ -n "$CODESPACES" ]; then  # Running from a GitHub codespace. OMZ is pre-installed, just change shell.
+#        echo "Changing codespace shell to zsh"
+#        sudo chsh -s "$(command -v zsh)" "$USER"
+#    elif [ ! -e "$ZSH" ]; then  # OMZ not installed, installing.
+#        echo "Installing Oh My Zsh"
+#        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#    else  # OMZ already installed.
+#        echo "Oh My Zsh is already installed"
+#    fi
+#
+#    echo "Installing plugins"
+#    test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
+#        git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
+#    echo "Symlinking theme"
+#    ln --backup=numbered -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
+#
+#    echo "Symlinking other files"
+#    ln --backup=numbered -fsv "$HERE/zshrc.sh" "~/.zshrc"
+#    ln --backup=numbered -fsv "$HERE/zprofile.sh" "~/.zprofile"
 }
 
 # Configure git.
@@ -95,31 +116,6 @@ main() {
         vscode_defaults
     fi
     echo "✅ Done installing dotfiles via $NAME..."
-
-#    # Install OMZ.
-#    command -v zsh || command "$_"  # Print error if zsh command not found.
-#    if [ -n "$CODESPACES" ]; then  # Running from a GitHub codespace. OMZ is pre-installed, just change shell.
-#        echo "Changing codespace shell to zsh"
-#        sudo chsh -s "$(command -v zsh)" "$USER"
-#    elif [ ! -e "$ZSH" ]; then  # OMZ not installed, installing.
-#        echo "Installing Oh My Zsh"
-#        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-#    else  # OMZ already installed.
-#        echo "Oh My Zsh is already installed"
-#    fi
-#
-#    echo "Installing plugins"
-#    test -e "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ||
-#        git clone --depth=1 "https://github.com/zsh-users/zsh-syntax-highlighting.git" "$_"
-#    echo "Symlinking theme"
-#    ln --backup=numbered -fsv "$HERE/robpol86.zsh-theme" "$ZSH_CUSTOM/themes/robpol86.zsh-theme"
-#
-#    echo "Symlinking other files"
-#    ln --backup=numbered -fsv "$HERE/zshrc.sh" "~/.zshrc"
-#    ln --backup=numbered -fsv "$HERE/zprofile.sh" "~/.zprofile"
-#
-#    echo "Configuring git"
-#    zsh -lc "_robpol86_git_config '$ZSH_CUSTOM'"
 }
 
 # Run.

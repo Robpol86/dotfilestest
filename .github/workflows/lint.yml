@@ -1,27 +1,25 @@
 name: Lint
 
-
 on:
   pull_request:
   push:
 
-
 jobs:
 
-  linux:
-    name: Linux
-    runs-on: ubuntu-latest
+  lint:
+    name: Lint
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: "${{ matrix.os }}"
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v2
-      - name: Lint
-        run: shellcheck ./install.sh ./commonrc.sh ./bashrc.sh
 
-  macos:
-    name: macOS
-    runs-on: macos-latest
-    steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Lint
+
+      - name: Install shellcheck
+        if: matrix.os == 'macos-latest'
+        run: brew install shellcheck
+
+      - name: Lint bash scripts
         run: shellcheck ./install.sh ./commonrc.sh ./bashrc.sh

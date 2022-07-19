@@ -72,7 +72,7 @@ else  # Linux non-root.
     PS1='\[\e[1;32m\]\u@\h\[\e[00m\]:\[\e[1;34m\]\W'"$PS1"' \$\[\e[0m\] '
 fi
 
-###### GITHUB
+#################################### GITHUB ####################################
 
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login

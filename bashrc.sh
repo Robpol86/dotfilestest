@@ -8,9 +8,6 @@ case $- in
       *) return ;;
 esac
 
-# shellcheck source=./commonrc.sh
-source ~/.commonrc
-
 # Aliases.
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -22,17 +19,10 @@ else
     alias ls='ls --color=auto'
 fi
 
-###### GITHUB
+# shellcheck source=./commonrc.sh
+source ~/.commonrc
 
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+#################################### GITHUB ####################################
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options

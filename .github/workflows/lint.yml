@@ -1,13 +1,25 @@
 name: Lint
 
+
 on:
   pull_request:
   push:
 
+
 jobs:
-  lint:
-    name: Lint
+
+  linux:
+    name: Linux
     runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Lint
+        run: shellcheck ./install.sh ./commonrc.sh ./bashrc.sh
+
+  macos:
+    name: macOS
+    runs-on: macos-latest
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
